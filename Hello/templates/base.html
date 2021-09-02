@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Description -->
+    <meta name="description" content="Shopare">
+    <!-- Keywords -->
+    <meta name="keywords" content="Shopare, Grocries">
+    <!-- author  -->
+    <meta name="author" content="Rudraksh Todwal">
+    <!-- Font Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- Faviconlogo -->
+    <link rel="shortcut icon" href="static\img\favicon.png" type="image/x-icon">
+    <!-- title -->
+    {% block title %} <title>Shopare</title>{% endblock title %}
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        nav {
+            display: flex;
+            height: 80px;
+            width: 100%;
+            background: #1b1b1b;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px 0 100px;
+            flex-wrap: wrap;
+        }
+
+        nav .logo {
+            color: #fff;
+            font-size: 35px;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 5px;
+        }
+
+        nav ul li a {
+            color: #f2f2f2;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 5px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        nav ul li a.active,
+        nav ul li a:hover {
+            color: #111;
+            background: #fff;
+        }
+
+        nav .menu-btn i {
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            display: none;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        @media (max-width: 1000px) {
+            nav {
+                padding: 0 40px 0 50px;
+            }
+        }
+
+        @media (max-width: 920px) {
+            nav .menu-btn i {
+                color: #fff;
+                font-size: 22px;
+                cursor: pointer;
+                display: block;
+            }
+
+            #click:checked~.menu-btn i:before {
+                content: "\f00d";
+            }
+
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                background: #111;
+                height: 100vh;
+                width: 100%;
+                text-align: center;
+                display: block;
+                z-index: 999;
+                transition: all 0.3s ease;
+            }
+
+            #click:checked~ul {
+                left: 0;
+            }
+
+            nav ul li {
+                width: 100%;
+                margin: 40px 0;
+            }
+
+            nav ul li a {
+                width: 100%;
+                margin-left: -100%;
+                display: block;
+                font-size: 20px;
+                transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            #click:checked~ul li a {
+                margin-left: 0px;
+            }
+
+            nav ul li a.active,
+            nav ul li a:hover {
+                background: none;
+                color: cyan;
+            }
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: -1;
+            width: 100%;
+            padding: 0 30px;
+            color: #1b1b1b;
+        }
+
+        .content div {
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        nav ul li:nth-child(odd) {
+            animation: up 1s forwards;
+        }
+
+        nav ul li:nth-child(even) {
+            animation: down 1s forwards;
+        }
+
+        @keyframes up {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes down {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .typewriter_cover {
+            width: 100%;
+            background-color: black;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .containar p {
+            font-size: 2rem;
+            padding: 0.5rem;
+            letter-spacing: 0.1rem;
+            text-align: center;
+            overflow: hidden;
+            color: white;
+            height: 5em;
+            margin-top: -41px;
+        }
+
+        .containar p span.cursor {
+            display: inline-block;
+            background-color: #ccc;
+            margin-left: 0.1rem;
+            width: 3px;
+            animation: blink 1s infinite;
+
+        }
+
+        .containar p span.typed-text {
+            font-weight: normal;
+            color: #53FC53;
+        }
+
+        .butn-explore {
+            text-decoration: none;
+            background-color: #53FC53;
+            text-transform: uppercase;
+            border: none;
+            height: 50px;
+            border-radius: 7px;
+            font-size: 20px;
+            padding: 0px 50px;
+        }
+
+        .butn-explore:hover,
+        .butn-explore:active {
+            border: none;
+            transform: translateY(-3px);
+            color: #fff;
+            box-shadow: 0 10px 20px 0 rgba(255, 253, 253, 0.397);
+            transition-duration: .5s;
+        }
+
+
+        .search {
+            padding: 2em;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            width: 80%;
+            padding: -0.1em;
+            font-size: 1.1em;
+            height: 3.6em;
+        }
+
+        .search-submit {
+            width: auto;
+            border: none;
+            background: #53FC53;
+            color: #111;
+            padding: 1em;
+            font-weight: bolder;
+            cursor: pointer;
+        }
+
+        .sub-title {
+            font-size: 1.5em;
+            color: grey;
+            font-weight: 300;
+            margin: 10px;
+            margin-left: 30px;
+        }
+
+        body {
+            font-family: gotham;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+            outline: none;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .footer-main-div {
+            width: 100%;
+            height: auto;
+            margin: auto;
+            background: black;
+            padding: 20px opx;
+        }
+
+
+
+        .footer-social-icons {
+
+            width: 100%;
+            height: auto;
+            margin: auto;
+        }
+
+        .footer-social-icons ul {
+            margin: 0px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .footer-social-icons ul li {
+
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 0px 10px;
+            border-radius: 50%;
+            background: #53FC53;
+        }
+
+        .footer-social-icons ul li a {
+            border: 1px solid white;
+            border-radius: 50%;
+            color: #272727;
+            font-size: 25px;
+            display: block;
+        }
+
+        .footer-social-icons ul li a:hover {
+            background-color: black;
+            color: #53FC53;
+        }
+
+        .footer-social-icons ul li a i {
+            line-height: 50px;
+
+        }
+
+        .headline {
+            text-align: left;
+            color: #53FC53;
+        }
+
+        .service {
+
+            text-align: left;
+            color: #53FC53;
+        }
+
+        .footer-menu-one {
+            width: 100%;
+            height: auto;
+            margin: auto;
+            margin-top: 30px;
+            box-sizing: border-box;
+        }
+
+        .footer-menu-one ul {
+            margin: opx;
+            padding: opx;
+            text-align: left;
+            list-style-type: none;
+        }
+
+        .footer-menu-one ul li {
+            display: list-item;
+            margin: 10px 15px;
+        }
+
+        .footer-menu-one ul li a {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .footer-menu-one ul li a:hover {
+            color: plum;
+        }
+
+        .footer-menu-two {
+            overflow: hidden;
+            width: 100%;
+            height: auto;
+            margin: auto;
+            margin-top: 30px;
+            box-sizing: border-box;
+        }
+
+        .footer-menu-two ul {
+            margin: opx;
+            padding: opx;
+            text-align: left;
+            list-style-type: none;
+        }
+
+        .footer-menu-two ul li {
+
+            display: list-item;
+            margin: 10px 15px;
+        }
+
+        .footer-menu-two ul li a {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .footer-menu-two ul li a:hover {
+            color: #53FC53;
+        }
+
+
+        /* FOOTER */
+        .footer {
+            width: 100%;
+            background: linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)), url("static\img\logo.png");
+            background-size: cover;
+            display: block;
+        }
+
+        .inner-footer {
+            width: 95%;
+            margin: auto;
+            padding: 30px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+            justify-content: center;
+        }
+
+        .footer-items {
+            padding-top: 40px;
+            width: 25%;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            color: #fff;
+        }
+
+        .footer-items p {
+            padding-top: 40px;
+            font-size: 19px;
+            color: #fff;
+        }
+
+        .footer-items img {
+            width: 100px;
+            height: 90px;
+        }
+
+        .footer-items h1 {
+            color: #fff;
+        }
+
+        .border1 {
+
+            height: 3px;
+            width: 40px;
+            background: crimson;
+            color: crimson;
+            background-color: crimson;
+            border: 0px;
+        }
+
+        .footer-items ul {
+            list-style: none;
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-items ul a {
+
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .footer-items ul a:hover {
+            color: Crimson;
+        }
+
+        .footer-items ul li {
+            margin: 10px 0;
+
+        }
+
+        .footer-items li i {
+            margin-right: 20px;
+        }
+
+        .footer-bottom {
+            text-decoration: none;
+            padding: 16px;
+            background-color: grey;
+            color: #000;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .footer-bottom a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+        }
+
+        .social-media {
+            width: 100%;
+            color: #fff;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .social-media a {
+            text-decoration: none;
+        }
+
+        .social-media i {
+            height: 25px;
+            width: 25px;
+            margin: 20px 10px;
+            padding: 4px;
+            color: #fff;
+            transition: 0.5s;
+        }
+
+        .social-media i:hover {
+            transform: scale(1.5);
+        }
+
+        /* for tablet mode view */
+
+        @media screen and (max-width: 1275px) {
+            .footer-items {
+                width: 50%;
+            }
+        }
+
+        /* for mobile screen view */
+
+        @media screen and (max-width: 660px) {
+            .footer-items {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo"> <a href="#"><img src="static\img\shoparelogo.png" style="width: 60px; height: 59px; margin-top: 10px; margin-left:-48px;" class="logo" alt=""></a></div> 
+        <div class="logo"><a style="color: white;" href="/">SHOPARE</a></div>
+        <input type="checkbox" id="click">
+        <label for="click" class="menu-btn">
+            <i class="fa fa-bars"></i>
+        </label>
+        <ul>
+            <li><a class="active" href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/accounts/login">Log in</a></li>
+            <li><a href="/accounts/register">Sign up</a></li>
+        </ul>
+    </nav>
+
+    {% block content %}
+
+    {% endblock content %}
+    <!--  FOOTER START -->
+
+    <div class="footer">
+        <div class="inner-footer">
+
+            <!--  for company name and description -->
+            <div class="footer-items">
+                <img src="static\img\shoparelogo.png" alt="">
+                <h4>SHOPARE</h4>
+                <p>The purpose of a BUSSINESS is to create a customer who creates customers!!</p>
+            </div>
+
+            <!--  for quick links  -->
+            <div class="footer-items">
+                <h3>Quick Links</h3>
+                <div class="border1"></div>
+                <!--for the underline -->
+                <ul>
+                    <a href="/">
+                        <li><i class='fa fa-angle-right'></i>Home</li>
+                    </a>
+                    <a href="/about">
+                        <li><i class='fa fa-angle-right'></i>About US</li>
+                    </a>
+                    <a href="/contact">
+                        <li><i class='fa fa-angle-right'></i>Contact</li>
+                    </a>
+                    
+                </ul>
+            </div>
+            <div class="footer-items">
+                <h3>Quick Links</h3>
+                <div class="border1"></div>
+                <!--for the underline -->
+                <ul>
+                    
+                    <a href="/contact">
+                        <li><i class='fa fa-angle-right'></i>Sign Up</li>
+                    </a>
+                    <a href="/contact">
+                        <li><i class='fa fa-angle-right'></i>Log In</li>
+                    </a>
+                    <a href="/contact">
+                        <li><i class='fa fa-angle-right'></i>Sign Up</li>
+                    </a>
+                    <a href="/contact">
+                        <li><i class='fa fa-angle-right'></i>Log In</li>
+                    </a>
+                    <a href="/contact">
+                        <li><i class='fa fa-angle-right'></i>Log In</li>
+                    </a>
+                </ul>
+            </div>
+
+            <!--  for contact us info -->
+            <div class="footer-items">
+                <h3>Contact us</h3>
+                <div class="border1"></div>
+                <ul>
+                    <li><i class="fa fa-map-marker-alt"></i>JAIPUR - 302015 <br>(RAJ.), INDIA</li>
+                    <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:6367562964">+91 6367562964 </a> </li>
+                    <li><i class="fa fa-envelope" aria-hidden="true"></i><a
+                            href="mail: sidharthv605@gmail.com">webdevelopersfactory<br>@gmail.com</a></li>
+                </ul>
+
+                <!--   for social links -->
+                <div class="social-media" style="color: white;">
+                    <a href="" style="color: white;"><i class="fa fa-facebook-square"></i></a>
+                    <a href="" style="color: white;"><i class="fa fa-instagram"></i></a>
+                    <a href="" style="color: white;"><i class="fa fa-twitter"></i></a>
+                    <a href="" style="color: white;"><i class="fa fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!--   Footer Bottom start  -->
+        <div class="footer-bottom">
+            Desgined & Developed by: <a href="http://webdevelopersfactory.pythonanywhere.com/" target="blank">Web
+                Developers Factory</a> <br> Copyright &copy; Shopare 2020.
+
+        </div>
+    </div>
+
+    <!--   Footer Bottom end -->
+
+    <!--   FOOTER END -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+</body>
+
+</html>
